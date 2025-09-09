@@ -90,7 +90,7 @@ logger.info(f"Using Gemini search result model: {GEMINI_SEARCH_RESULT_API_MODEL}
 
 #Automatic MCP Tool Server
 AUTOMATIC_MCP_TOOL_SERVER_USAGE=os.environ.get("AUTOMATIC_MCP_TOOL_SERVER_USAGE", "false").lower() == "true"
-AUTOMATIC_TOOL_MCP_SERVER_URL=os.environ.get("AUTOMATIC_TOOL_MCP_SERVER_URL", "https://portal.breeze.in/ai/mcp")
+AUTOMATIC_TOOL_MCP_SERVER_URL="http://localhost:5173/ai/neurolink"
 MCP_CLIENT_TIMEOUT = int(os.environ.get("MCP_CLIENT_TIMEOUT", 30)) #seconds
 
 _shops_for_mcp_str = os.environ.get("SHOPS_FOR_AUTOMATIC_MCP_SERVER", "")
@@ -100,16 +100,20 @@ SHOPS_FOR_AUTOMATIC_MCP_SERVER = [shop.strip() for shop in _shops_for_mcp_str.sp
 _selective_mcp_functions_str = os.environ.get("SELECTIVE_MCP_FUNCTIONS", "")
 SELECTIVE_MCP_FUNCTIONS = [func.strip() for func in _selective_mcp_functions_str.split(',') if func.strip()]
 
+# Maximum number of tools to register (OpenAI limit is 128, but we set lower to be safe)
+MAX_MCP_TOOLS = int(os.environ.get("MAX_MCP_TOOLS", "128"))
+
 logger.info(f"Shops enabled for Automatic MCP Server: {SHOPS_FOR_AUTOMATIC_MCP_SERVER}")
 logger.info(f"Selective MCP functions enabled: {SELECTIVE_MCP_FUNCTIONS}")
+logger.info(f"Maximum MCP tools limit: {MAX_MCP_TOOLS}")
 
 LIGHTHOUSE_APP_URL = os.environ.get("LIGHTHOUSE_APP_URL", "http://localhost:5173")
 ENABLE_ALL_METRICS_FROM_CKH = os.environ.get("ENABLE_ALL_METRICS_FROM_CKH", "true").lower() == "true"
 
 # Context Summarization Configuration
 ENABLE_SUMMARIZATION = os.environ.get("ENABLE_SUMMARIZATION", "true").lower() == "true"
-MAX_TURNS_BEFORE_SUMMARY = int(os.environ.get("MAX_TURNS_BEFORE_SUMMARY", 10))
-KEEP_RECENT_TURNS = int(os.environ.get("KEEP_RECENT_TURNS", 2))
+MAX_TURNS_BEFORE_SUMMARY = int(os.environ.get("MAX_TURNS_BEFORE_SUMMARY", 1))
+KEEP_RECENT_TURNS = int(os.environ.get("KEEP_RECENT_TURNS", 1))
 
 BREEZE_BUDDY_CALL_PROVIDER = os.environ.get("BREEZE_BUDDY_CALL_PROVIDER", "twilio")
 AZURE_BREEZE_BUDDY_OPENAI_MODEL = os.environ.get("AZURE_BREEZE_BUDDY_OPENAI_MODEL", "gpt-4o-automatic")

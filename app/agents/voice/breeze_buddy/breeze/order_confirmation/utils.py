@@ -23,6 +23,7 @@ def get_stt_service():
             temperature=0.0,
         )
     else:
+        #stt
         logger.info("Using Google STT service with VAD-based turn detection")
         return GoogleSTTService(
             params=GoogleSTTService.InputParams(languages=[Language.EN_US, Language.EN_IN], enable_interim_results=False),

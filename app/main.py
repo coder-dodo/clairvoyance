@@ -234,7 +234,7 @@ async def websocket_endpoint(websocket: WebSocket):
 async def bot_connect(request: AutomaticVoiceUserConnectRequest) -> Dict[str, Any]:
     logger.info(f"Received new user connect request payload: {request.model_dump_json(exclude_none=True)}")
     # 1. Validate request
-    raw_mode = request.mode
+    raw_mode = request.mode #'TEST'
     euler_tok = request.eulerToken
     breeze_tok = request.breezeToken
     shop_url = request.shopUrl
